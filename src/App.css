@@ -64,6 +64,8 @@ input{
   padding:  5px 20px;
   margin-bottom: 0;
   margin-top: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .login-btn:hover {
