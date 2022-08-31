@@ -1,10 +1,37 @@
-import { Link } from "react-router-dom";
 import React,{useState}  from 'react'
+import { Link } from "react-router-dom";
 import '../App.css'
+import emailjs from '@emailjs/browser';
+
+const Result = () =>{
+  return (
+    <p> Sucessfull!</p>
+  )
+}
 
 const SignupPage = () => {
-  const [enteredEmail, setEnteredEmail] = useState('');
-    const [enteredPassword, setEnteredPassword] = useState('');
+   const [enteredEmail, setEnteredEmail] = useState('');
+  const [enteredPassword, setEnteredPassword] = useState('');
+  const[result, setResult] = useState(false);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('service_jtwd3g8', 'template_suqzrwk', e.target, 'aShkbk3tf2laAsna0')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+      e.target.reset();
+      setResult(true)
+  };
+
+  setTimeout(()=>{
+      setResult(false)
+  },6000)
+
+ 
 
     function emailChangedHandler(e){
         setEnteredEmail(e.target.value)
@@ -18,17 +45,19 @@ const SignupPage = () => {
     <div className="form-container">
         <Link to="/"><button className="homepage-btn">GO TO HOME PAGE</button></Link>
        
-      <form className='form' onSubmit='' >
+      <form className='form' onSubmit={sendEmail} >
           <div>
-              <input required type="email" name="" id="email" value={enteredEmail} placeholder='Enter Email here ....' onChange={emailChangedHandler}/>
+              <input required type="email" name="email" id="email" value={enteredEmail} placeholder='Enter Email here ....' onChange={emailChangedHandler}/>
           </div>
           <div>
-              <input required type="password" name="" id="password" value={enteredPassword} placeholder="Enter Password here ...." onChange={passwordChangedHandler}/>
+              <input required type="password" name="password" id="password" value={enteredPassword} placeholder="Enter Password here ...." onChange={passwordChangedHandler}/>
           </div>
           <div className="login-container">
               <button className="login-btn">Login</button>
           </div>
-
+          <div className='result' >
+              {result ? <Result/> : null}
+           </div>
         </form>
     </div>
   )

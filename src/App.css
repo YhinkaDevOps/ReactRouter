@@ -46,6 +46,7 @@ padding: 5px 10px;
   padding: 50px;
   border-radius: 10px;
   box-shadow: 5px 10px 30px 10px black;
+  height: 100px;
 }
 
 .form-container{
@@ -70,4 +71,8 @@ input{
 
 .login-btn:hover {
     background-color: aqua;
+}
+
+.result{
+  margin-top: 10px;
 }
