@@ -20,6 +20,8 @@
   padding: 10px 20px;
   cursor: pointer; 
   border: 1px solid white;
+  margin-bottom: 10px;
+  border: 1px solid gray;
 }
 
 .signup-btn:hover {
@@ -39,14 +41,14 @@ padding: 5px 10px;
 
 .form{
   background-color: rgb(238, 123, 123);
-  display: inline-block;
   padding: 20px;
   margin: auto;
   width: 20%;
   padding: 50px;
   border-radius: 10px;
   box-shadow: 5px 10px 30px 10px black;
-  height: 100px;
+  height: 200px;
+  outline: none;
 }
 
 .form-container{
@@ -75,4 +77,8 @@ input{
 
 .result{
   margin-top: 10px;
+}
+
+.signup-form{
+  margin-right: 250px;
 }

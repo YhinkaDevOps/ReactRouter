@@ -1,64 +1,85 @@
-import React,{useState}  from 'react'
+import React  from 'react'
 import { Link } from "react-router-dom";
 import '../App.css'
-import emailjs from '@emailjs/browser';
+import { Button, Form, Input, InputNumber } from 'antd';
 
-const Result = () =>{
-  return (
-    <p> Sucessfull!</p>
-  )
-}
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+
+const validateMessages = {
+  required: '${label} is required!',
+  types: {
+    email: '${label} is not a valid email!',
+    number: '${label} is not a valid number!',
+  },
+  number: {
+    range: '${label} must be between ${min} and ${max}',
+  },
+};
+
 
 const SignupPage = () => {
-   const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
-  const[result, setResult] = useState(false);
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs.sendForm('service_jtwd3g8', 'template_suqzrwk', e.target, 'aShkbk3tf2laAsna0')
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
-      });
-      e.target.reset();
-      setResult(true)
+  const onFinish = (values) => {
+    console.log(values);
   };
-
-  setTimeout(()=>{
-      setResult(false)
-  },6000)
-
- 
-
-    function emailChangedHandler(e){
-        setEnteredEmail(e.target.value)
-    }
-
-    function passwordChangedHandler(e){
-        setEnteredPassword(e.target.value)
-    }
-
+  
   return (
-    <div className="form-container">
+    <div >
         <Link to="/"><button className="homepage-btn">GO TO HOME PAGE</button></Link>
-       
-      <form className='form' onSubmit={sendEmail} >
-          <div>
-              <input required type="email" name="email" id="email" value={enteredEmail} placeholder='Enter Email here ....' onChange={emailChangedHandler}/>
-          </div>
-          <div>
-              <input required type="password" name="password" id="password" value={enteredPassword} placeholder="Enter Password here ...." onChange={passwordChangedHandler}/>
-          </div>
-          <div className="login-container">
-              <button className="login-btn">Login</button>
-          </div>
-          <div className='result' >
-              {result ? <Result/> : null}
-           </div>
-        </form>
+        <Form className='signup-form' {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+          <Form.Item
+            name={['user', 'name']}
+            label="Name"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={['user', 'email']}
+            label="Email"
+            rules={[
+              {
+                type: 'email',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={['user', 'age']}
+            label="Age"
+            rules={[
+              {
+                type: 'number',
+                min: 0,
+                max: 99,
+              },
+            ]}
+          >
+            <InputNumber />
+          </Form.Item>
+          <Form.Item name={['user', 'website']} label="Website">
+            <Input />
+          </Form.Item>
+          <Form.Item name={['user', 'introduction']} label="Introduction">
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+    </Form>
     </div>
   )
 }
